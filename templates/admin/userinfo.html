@@ -1,0 +1,70 @@
+{% extends 'admin/home.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+
+    <h1>Users Information </h1>
+<style>
+    table tbody {
+        counter-reset: rowNumber;
+    }
+    table tbody tr {
+        counter-increment: rowNumber;
+    }
+    table tr td:first-child::before {
+        content: counter(rowNumber);
+        min-width: 1em;
+        margin-right: 0.5em;
+    }
+</style>
+        <table  class="table text-center"  >
+            <tr class="table-active">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email Adress</th>
+                    <th>Username</th>
+                    <th>Balance</th>
+                    <th>Gender</th>
+                    <th>Currency Type</th>
+                </tr>
+                </thead>
+        <tbody>
+
+
+
+        {% for info in  new_page_information %}
+            <tr>
+                <td></td>
+                <td>{{ info.user }}</td>
+                <td>{{ info.user.last_name }}</td>
+                <td>{{ info.user.email }}</td>
+                <td>{{ info.user.username }}</td>
+                <td>{{ info.balance }}</td>
+                <td>{{ info.gender }}</td>
+                <td>{{ info.Currency_type }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if new_page_information.has_other_pages %}
+        <div class="page-links">
+
+        <span class="current-page">
+                Page {{ new_page_information.number }} of {{ new_page_information.paginator.num_pages }}
+            </span>
+
+        <span class="step-links">
+        {% if new_page_information.has_previous %}
+            <a href="?page={{ new_page_information.previous_page_number}}"> &laquo; Previous Pages </a>
+
+        {% endif %}
+        {% if new_page_information.has_next %}
+            <a href="?page={{ new_page_information.next_page_number }}">Next Pages &raquo;</a>
+
+        {% endif %}
+    {% endif %}
+{% endblock %}

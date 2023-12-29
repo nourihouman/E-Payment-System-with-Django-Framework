@@ -1,0 +1,36 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+{%  block title %} Sign In {% endblock %}
+
+{% block nav_bar %}
+    <a href="/webapps2023/">
+        <button class="btn backBtn  btn-md pull-right w-5" style="background-color:black ;color:white" type="button" >Back</button>
+    </a>
+{% endblock %}
+{% block content %}
+
+
+
+    <div class="d-flex  align-items-center justify-content-center" style="min-height: 80vh; min-width:80vh ">
+
+
+    <form method="post" class="form-control" style="width: 50%; padding: 5%" action="/webapps2023/login/"  >
+        {% csrf_token %}
+
+        <div class="text-center mb-4">
+            <img class="mb-4" src="{% static 'logo.PNG' %}" alt="Logo" width="72" height="72">
+        </div>
+            {{  login_user | crispy }}
+
+        <button type="submit" class="btn btn-primary btn-lg rounded-pill" style="width: 100%; background-color: royalblue; font-family: 'Times New Roman'">Sign In</button>
+
+        <div class="text-center  mt-3 mb-3 " style="color:gray">_________________________or___________________________</div>
+        <a href="/webapps2023/register/" class="btn btn-secondary btn-lg rounded-pill" style="width: 100%; background-color:white; color:blue; font-family: 'Times New Roman'">Sign Up</a>
+    </form>
+
+    </div>
+{% endblock %}
+
+

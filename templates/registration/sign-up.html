@@ -1,0 +1,35 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{%  block title %} Sing Up {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block nav_bar %}
+<a href="/webapps2023/">
+    <button class="btn backBtn  btn-md pull-right w-5" style="background-color:black ;color:white" type="button" >Back</button>
+</a>
+{% endblock %}
+{% block content %}
+
+    <div class="d-flex  align-items-center justify-content-center" style="min-height: 80vh; min-width:80vh ">
+
+    <form method="post" class="form-control  border-0" style="width: 25%; padding: 5%"  action="/webapps2023/register/"  >
+        <div class="text-center mb-4">
+            <img class="mb-4" src="{% static 'logo.PNG' %}" alt="Logo" width="72" height="72">
+        </div>
+        <div class="text-center mb-4"><h2> Set Up your profile</h2>
+            <h6> This information needs to be accurate.</h6><br>
+        </div>
+
+        {% csrf_token %}
+        {{ register_user|crispy }}
+        <button type="submit" class="btn btn-success btn-lg rounded-pill"style="width: 100%; background-color: royalblue; font-family: 'Times New Roman'">Sign Up</button>
+        <div class="text-center  mt-3 mb-3 " style="color:gray">__________________have an account?________________</div>
+        <a href="/webapps2023/login/" class="btn btn-secondary btn-lg rounded-pill" style="width: 100%; background-color:white; color:blue; font-family: 'Times New Roman'">Sign In</a>
+
+    </form>
+
+
+{% endblock  %}
+
+

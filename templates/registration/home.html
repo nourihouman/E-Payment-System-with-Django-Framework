@@ -1,0 +1,159 @@
+{% extends 'registration/base.html' %}
+{% block title %}Home Page{% endblock %}
+{% load static %}
+{% load notifications_tags %}
+{% live_notify_badge badge_class="notify_badge_class" %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+{% block nav_bar %}
+
+
+
+    {% if user.is_authenticated   %}
+
+
+    {% if notification.unread  %}
+        <div class="position-relative d-inline-block">
+
+     <li class="dropdown ms-auto">
+        <a href="/homepage/"  class="dropdown-toggle" data-toggle="dropdown">
+            <span id="notification-badge" class="position-relative top-0 start-100 translate-middle badge rounded-pill bg-danger">{% live_notify_badge %}</span>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell " viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+            </svg>
+        </a>
+         <ul class="dropdown-menu ms-auto" id="notice-link">
+             <a href="{% url "notifications:mark_all_as_read" %}">
+                 {% live_notify_list %}
+
+
+             </a>
+         </ul>
+     </li>
+        </div>
+    {% else %}
+        <ul class="dropdown-menu ms-auto" id="notice-link">
+                <a href="{% url "notifications:mark_all_as_read"   %}">
+                </a>
+        </ul>
+{% endif %}
+
+
+        <span class="navbar-text me-3"> signed in as {{ user.username }}  </span>
+        <a class="nav-link active me-3" aria-current="page" href="/logout">Sign Out</a>
+
+    {% else %}
+        <a style="margin-left: 25px" class="nav-link px-3" href="/webapps2023/register/">Sign Up</a>
+        <a class="nav-link px-3" href="/webapps2023/login/">Sign In</a>
+
+    {% endif %}
+{%  endblock %}
+
+
+{% block content %}
+
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="True">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+
+    {% if user.is_authenticated%}
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column  ">
+                        <li class="nav-item">
+                            <a style="font-size: 20px" class="nav-link jp-icon-hoverShow" aria-current="page" href="/webapps2023/homepage/">
+                                <span  data-feather="home"></span>
+                                User Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 20px" class="nav-link " title="Houman" href="/webapps2023/profile/">
+                                <span data-feather="dollar-sign"></span>
+                                Transfer Money
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 20px" class="nav-link" href="/webapps2023/request-money/">
+                                <span data-feather="request money"></span>
+                                Request Money
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 20px" class="nav-link" href="/webapps2023/request-response/">
+                                <span data-feather="users"></span>
+                                Request Response
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 20px" class="nav-link" href="/webapps2023/transcation-history/">
+                                <span class="position-absolute"></span>
+                                Transaction History
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+                {% block main %}
+                    <div style="text-align: left;">
+                   <h1 style="font-size: 50px;color:#985f0d; padding-top: 10px;"> Hello {{ user.first_name }}</h1>
+
+
+
+                      <h2 style="font-size: 25px;color: #c0a16b  " > Your account balance is {{ balance}} {{ currency_type }}</h2>
+                    </div>
+                {% endblock  %}
+            </main>
+        </div>
+    </div>
+        <div>
+
+    </div>
+
+{% else %}
+
+    <div style="background-image: url('{% static 'cloud.jpg' %}'); background-size: cover; background-position: center; background-repeat: repeat ;   height: 1200px">
+        <div class="text-left mb-4">
+            <img class="mb-4" src="{% static 'logo.PNG' %}" alt="Logo" width="72" height="72">
+        </div>
+        <div class="text-center mb-4">
+            <img class="mb-4" src="{% static 'mobile.pay.PNG' %}" alt="Logo" width="300" height="300">
+            <div class="text-left px-5">
+                <h1 style="color: #003087; font-weight: bold">Send</h1>
+                <h1 style="color:#003087;font-weight: bold">Request</h1>
+                <h1 style="color: #003087;font-weight: bold">Manage</h1>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

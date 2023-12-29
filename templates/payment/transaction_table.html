@@ -1,0 +1,71 @@
+{% extends 'registration/home.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+
+
+
+{% block main %}
+    <div class="text-center"> <h2>Transaction History</h2></div>
+
+    <form method="post"  action="/transaction-history/">
+        {% csrf_token %}
+        {{  transaction_history | crispy }}
+
+
+    <table  class="table text-center"  >
+        <tr class="table-active">
+
+            <th></th>
+            <th>Date</th>
+            <th>Sender</th>
+            <th>Recipient</th>
+            <th>Amount</th>
+            <th>Reference</th>
+            <th>Type</th>
+           <!-- <th>Status</th> -->
+        </tr>
+
+        <tbody >
+        {% for transaction in new_page %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ transaction.timestamp }}</td>
+                <td>{{ transaction.sender.username }}</td>
+                <td>{{ transaction.recipient }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.reference }}</td>
+                <td>{{ transaction.transfer_type }}</td>
+               <!-- <td>{{ transaction.transfer_status }}</td> -->
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">No transactions found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% if new_page.has_other_pages %}
+    <div class="page-links">
+
+            <span class="current-page">
+                Page {{ new_page.number }} of {{ new_page.paginator.num_pages }}
+            </span>
+
+        <span class="step-links">
+            {% if new_page.has_previous %}
+                <a href="?page={{ new_page.previous_page_number}}"> &laquo; Previous Pages </a>
+
+            {% endif %}
+            {% if new_page.has_next %}
+                <a href="?page={{ new_page.next_page_number }}">Next Pages &raquo;</a>
+
+            {% endif %}
+        </span>
+    </div>
+{% endif %}
+
+{% endblock %}
+
+
+

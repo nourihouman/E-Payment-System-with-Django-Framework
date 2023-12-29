@@ -1,0 +1,14 @@
+{% extends 'registration/home.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+<h2>Request Money</h2>
+<hr>
+
+<form method="post"   action="/webapps2023/request-money/">
+     {{form|crispy}}
+    {% csrf_token %}
+    <button type="submit"  class="btn btn-primary btn-lg rounded-pill" style="width: 15%; background-color: royalblue; font-family: 'Times New Roman'">Request</button>
+</form>
+{% endblock %}

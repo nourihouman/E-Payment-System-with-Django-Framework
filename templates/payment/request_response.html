@@ -1,0 +1,145 @@
+{% extends 'registration/home.html' %}
+
+{% block main %}
+<h2>Money Requests Received</h2>
+<hr>
+
+
+
+{% if money_requests %}
+    <!-- <div class="card-group">
+
+        <div class="row row-cols-2 row-cols-md-1">
+        <div class="col mb-4">
+            <div class="row row-cols-2 row-cols-md-1">
+        <div class="card-group">
+-->
+        <div class="container">
+
+            <div class="row"  >
+
+                <div class="col-md-3"  >
+                    <h1>Pending</h1>
+                    {% for request in money_requests %}
+                        {% if request.transfer_status == 'pending' %}
+                            <div class="card" style="width: 18rem;" >
+                        <div class="card-body">
+                            <h5 class="card-title">Request</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ request.sender }}</h6>
+                            <p class="card-text">{{ request.amount }}</p>
+                            {% if not request.approved and not request.declined   %}
+                                <form action="/webapps2023/accept_request/" method="GET">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="request_id" value="{{ request.id }}">
+                                    <button value="accept" type="submit" class="btn btn-success" href="/webapps2023/accept_request/"  name="action" >accept</button>
+                       <!-- <input value="accept" type="submit" href="/accept_request/"  name="action" class="card-link"/> -->
+                                    <button value="decline" type="submit" class="btn btn-danger" href="/webapps2023/accept_request/"  name="action" >Decline</button>
+                       <!-- <input value="decline" type="submit" href="/accept_request/" name="action" class="card-link"> -->
+                                </form>
+                            {% elif request.approved %}
+                                <a>Approved</a>
+                            {% elif request.declined %}
+                                <a>Declined</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                        {% endif %}
+                        <br>
+                    {% endfor %}
+                </div>
+
+
+                <div class="col-md-3" style="margin-right: 80px">
+                    <h1>Approved</h1>
+
+                    {% for request in money_requests %}
+                    {% if request.transfer_status == 'successful' %}
+                    <div style="background-color: green">
+                        <div class="card" style="width: 18rem;" >
+                            <div class="card-body">
+                                <h5 class="card-title">Request</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ request.sender }}</h6>
+                                <p class="card-text">{{ request.amount }}</p>
+                                {% if not request.approved and not request.declined   %}
+                                    <form action="/webapps2023/accept_request/" method="GET">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                                        <button value="accept" type="submit" class="btn btn-success" href="/webapps2023/accept_request/"  name="action" >accept</button>
+                                        <!-- <input value="accept" type="submit" href="/accept_request/"  name="action" class="card-link"/> -->
+                                        <button value="decline" type="submit" class="btn btn-danger" href="/webapps2023/accept_request/"  name="action" >Decline</button>
+                                        <!-- <input value="decline" type="submit" href="/accept_request/" name="action" class="card-link"> -->
+                                    </form>
+                                {% elif request.approved %}
+                                    <a>Approved</a>
+                                {% elif request.declined %}
+                                    <a>Declined</a>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer text-muted">
+                                {{ request.approved_at }}
+                            </div>
+                            </div>
+                    </div>
+                        <br>
+                    {% endif %}
+
+                    {% endfor %}
+                </div>
+
+
+                <div class="col-md-3">
+                    <h1>Cancelled</h1>
+                    {% for request in money_requests %}
+                    {% if request.transfer_status == 'cancelled' %}
+
+                    <div style="background-color: red">
+
+                        <div class="card" style="width: 18rem;" >
+                            <div class="card-body">
+                                <h5 class="card-title">Request</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ request.sender }}</h6>
+                                <p class="card-text">{{ request.amount }}</p>
+                                {% if not request.approved and not request.declined   %}
+                                    <form action="/webapps2023/accept_request/" method="GET">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                                        <button value="accept" type="submit" class="btn btn-success" href="/webapps2023/accept_request/"  name="action" >accept</button>
+                                        <!-- <input value="accept" type="submit" href="/accept_request/"  name="action" class="card-link"/> -->
+                                        <button value="decline" type="submit" class="btn btn-danger" href="/webapps2023/accept_request/"  name="action" >Decline</button>
+                                        <!-- <input value="decline" type="submit" href="/accept_request/" name="action" class="card-link"> -->
+                                    </form>
+                                {% elif request.approved %}
+                                    <a>Approved</a>
+                                {% elif request.declined %}
+                                    <a>Declined</a>
+
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                    </div>
+                        <br>
+                    {% endif %}
+
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+{% else %}
+    <p>No money requests received.</p>
+{% endif %}
+
+{% endblock %}

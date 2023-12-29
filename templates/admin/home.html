@@ -1,0 +1,114 @@
+{% extends 'registration/base.html' %}
+{% block title %}Admin Home Page{% endblock %}
+{% load static %}
+{% load notifications_tags %}
+{% live_notify_badge badge_class="notify_badge_class" %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+{% block nav_bar %}
+
+    {% if user.is_authenticated   %}
+
+
+        <span class="navbar-text me-3"> signed in as {{ user.username }}  </span>
+        <a class="nav-link active me-3" aria-current="page" href="/logout">Sign Out</a>
+
+    {% else %}
+        <a class="nav-link px-3" href="/login">Sign In</a>
+    {% endif %}
+{%  endblock %}
+
+
+{% block content %}
+
+
+    {% if user.is_authenticated%}
+
+        <div class="container-fluid">
+            <div class="row">
+                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div class="position-sticky pt-3">
+                        <ul class="nav flex-column  ">
+                            <li class="nav-item">
+                                <a class="nav-link jp-icon-hoverShow" aria-current="page" href="/webapps2023/admin/homepage/">
+                                    <span  data-feather="homepage"></span>
+                                    Admin Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " title="HN" href="/webapps2023/admin/admin-register/">
+                                    <span data-feather="dollar-sign"></span>
+                                    Create superuser
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/webapps2023/admin/users-information/">
+                                    <span data-feather="request money"></span>
+                                    Users Information
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/webapps2023/admin/transaction-information/">
+                                    <span data-feather="users"></span>
+                                    Transaction Infromation
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/webapps2023/admin/request-information/">
+                                    <span class="position-absolute"></span>
+                                    Request Information
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </nav>
+
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div class="">
+                        <h1 class="h1">{{ title }}</h1>
+
+                    </div>
+                    {% block main %}
+                        <div style="text-align: left;">
+                            <h1 style="font-size: 50px; padding-top: 10px;"> Hello {{ user.username }}</h1>
+                        </div>
+                    {% endblock  %}
+                </main>
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+    {% else %}
+        <div class="text-left mb-4">
+            <img class="mb-4" src="{% static 'C:\Users\Admin\IdeaProjects\webapps2023\venv\Lib\site-packages\django\contrib\admin\static\logo.PNG' %}" alt="Logo" width="72" height="72">
+        </div>
+        <div class="text-center mb-4">
+        <img class="mb-4" src="{% static 'C:\Users\Admin\IdeaProjects\webapps2023\venv\Lib\site-packages\django\contrib\admin\static\mobile.pay.PNG' %}" alt="Logo" width="300" height="300">
+        <div class=" text-left px-5">
+            <h1 style="color: #003087; font-weight: bold">Send</h1>
+            <h1 style="color:#003087;font-weight: bold">Request</h1>
+            <h1 style="color: #003087;font-weight: bold">Manage</h1>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

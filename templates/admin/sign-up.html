@@ -1,0 +1,33 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{%  block title %} Sing Up {% endblock %}
+{% load crispy_forms_tags %}
+{% block nav_bar %}
+    <a href="/webapps2023/admin/homepage/">
+    <button class="btn backBtn  btn-md pull-right w-100" style="background-color:black ;color:white" type="button" >Back</button>
+    </a>
+
+{% endblock %}
+{% block content %}
+
+    <div class="d-flex  align-items-center justify-content-center" style="min-height: 80vh; min-width:80vh ">
+
+    <form method="post" class="form-control  border-0" style="width: 25%; padding: 5%"  action="/webapps2023/admin/admin-register/"  >
+        <div class="text-center mb-4">
+            <img class="mb-4" src="{% static 'C:\Users\Admin\IdeaProjects\webapps2023\venv\Lib\site-packages\django\contrib\admin\static\logo.PNG' %}" alt="Logo" width="72" height="72">
+        </div>
+        <div class="text-center mb-4"><h2> Create your new admin</h2>
+            <h6> This information needs to be accurate.</h6><br>
+        </div>
+
+        {% csrf_token %}
+        {{ register_admin|crispy }}
+
+        <button type="submit" class="btn btn-success btn-lg rounded-pill"style="width: 100%; background-color: royalblue; font-family: 'Times New Roman'">Sign Up</button>
+    </form>
+
+
+{% endblock  %}
+
+
